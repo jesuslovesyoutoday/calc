@@ -1,7 +1,9 @@
 #include "calc.h"
 #include <stdio.h>
+#include <cmath>
 
-char str[100] = "257*(634+854/24)$";
+char str[100] = "(7+5^2*2)^3$";
+//char str[100] = "257*(634+854/24)$";
 //char str[100] = "20*3+4$";
 //char str[100] = "90*2$";
 //char str[100] = "90+3$";
@@ -61,14 +63,28 @@ double getP()
         return getN();
 }
 
-double getT()
+double getD()
 {
     double val = getP();
-    while (*s == '*' || *s == '/')
+    while (*s == '^')
     {
         char* old_s = s;
         s++;
         double val2 = getP();
+        if (*old_s == '^')
+            val = pow(val, val2);
+    }
+    return val;
+}
+
+double getT()
+{
+    double val = getD();
+    while (*s == '*' || *s == '/')
+    {
+        char* old_s = s;
+        s++;
+        double val2 = getD();
         if (*old_s == '*')
             val *= val2;
         else
