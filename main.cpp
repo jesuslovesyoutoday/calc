@@ -4,6 +4,6 @@
 int main()
 {
     //char str[100] = "5+1$";
-    printf("%d\n", getG());
+    printf("%lg\n", getG());
     return 0;
 }

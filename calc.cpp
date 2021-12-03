@@ -1,7 +1,7 @@
 #include "calc.h"
 #include <stdio.h>
 
-char str[100] = "20*10/(80+20*(10-9))+1$";
+char str[100] = "257*(634+854/24)$";
 //char str[100] = "20*3+4$";
 //char str[100] = "90*2$";
 //char str[100] = "90+3$";
@@ -25,9 +25,9 @@ enum ERROR required(char symb)
         return NEOK;
 } 
 
-int getN()
+double getN()
 {
-    int val = 0;
+    double val = 0;
     char* old_s = s;
     do
     {
@@ -43,12 +43,12 @@ int getN()
         return val;
 }
 
-int getP()
+double getP()
 {
     if (*s == '(')
     {
         s++;
-        int val = getE();
+        double val = getE();
         if (required(')'))
             return val;
         else
@@ -61,14 +61,14 @@ int getP()
         return getN();
 }
 
-int getT()
+double getT()
 {
-    int val = getP();
+    double val = getP();
     while (*s == '*' || *s == '/')
     {
         char* old_s = s;
         s++;
-        int val2 = getP();
+        double val2 = getP();
         if (*old_s == '*')
             val *= val2;
         else
@@ -77,14 +77,14 @@ int getT()
     return val;
 }
 
-int getE()
+double getE()
 {
-    int val = getT();
+    double val = getT();
     while (*s == '+' || *s == '-')
     { 
         char* old_s = s; 
         s++;
-        int val2 = getT();
+        double val2 = getT();
         if (*old_s == '+')
             val += val2;
         else
@@ -93,9 +93,9 @@ int getE()
     return val;
 }
 
-int getG()
+double getG()
 {
-    int val = getE();
+    double val = getE();
     if (required('$'))
         return val;
     else 
